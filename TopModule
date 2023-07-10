@@ -1,0 +1,165 @@
+module ckt(a,b,p);
+input [3:0] a,b;
+output [7:0] p;
+wire one,px,px1,px2,px3,px4,py0,py1,py2,g2;
+wire [3:0] x,y,s;
+assign one=1;
+//lut 1
+LUT6_2 #(
+      .INIT(64'h78887888AA00AA00) // Specify LUT Contents
+   ) LUT6_2_inst1 (
+      .O6(p[1]), // 1-bit LUT6 output
+      .O5(p[0]), // 1-bit lower LUT5 output
+      .I0(b[0]), // 1-bit LUT input
+      .I1(a[1]), // 1-bit LUT input
+      .I2(b[1]), // 1-bit LUT input
+      .I3(a[0]), // 1-bit LUT input
+      .I4(one), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   //lut2
+   LUT6 #(
+      .INIT(64'h47777888B8887888)  // Specify LUT Contents
+   ) LUT6_inst1 (
+      .O(p[2]),   // LUT general output
+      .I0(b[2]), // LUT input
+      .I1(a[0]), // LUT input
+      .I2(b[1]), // LUT input
+      .I3(a[1]), // LUT input
+      .I4(b[0]), // LUT input
+      .I5(a[2])  // LUT input
+   );
+   
+   //lut3
+   LUT6 #(
+      .INIT(64'hF8888000C0008000)  // Specify LUT Contents
+   ) LUT6_inst2 (
+      .O(g2),   // LUT general output
+      .I0(b[2]), // LUT input
+      .I1(a[0]), // LUT input
+      .I2(b[1]), // LUT input
+      .I3(a[1]), // LUT input
+      .I4(b[0]), // LUT input
+      .I5(a[2])  // LUT input
+   );
+   
+   //lut4
+   LUT6_2 #(
+      .INIT(64'h66AACC00B4CCF000) // Specify LUT Contents
+   ) LUT6_2_inst2 (
+      .O6(px0), // 1-bit LUT6 output
+      .O5(px1), // 1-bit lower LUT5 output
+      .I0(b[1]), // 1-bit LUT input
+      .I1(b[2]), // 1-bit LUT input
+      .I2(b[3]), // 1-bit LUT input
+      .I3(a[1]), // 1-bit LUT input
+      .I4(a[2]), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   //lut5
+      LUT6 #(
+      .INIT(64'hF43CCCCC38F00000)  // Specify LUT Contents
+   ) LUT6_inst3 (
+      .O(px2),   // LUT general output
+      .I0(b[1]), // LUT input
+      .I1(b[2]), // LUT input
+      .I2(b[3]), // LUT input
+      .I3(a[1]), // LUT input
+      .I4(a[2]), // LUT input
+      .I5(a[3])  // LUT input
+   );
+   
+   //lut6
+      LUT6 #(
+      .INIT(64'h3830F0F0C0000000)  // Specify LUT Contents
+   ) LUT6_inst4 (
+      .O(px3),   // LUT general output
+      .I0(b[1]), // LUT input
+      .I1(b[2]), // LUT input
+      .I2(b[3]), // LUT input
+      .I3(a[1]), // LUT input
+      .I4(a[2]), // LUT input
+      .I5(a[3])  // LUT input
+   );
+   
+   //lut7
+      LUT6 #(
+      .INIT(64'hC0C0000000000000)  // Specify LUT Contents
+   ) LUT6_inst5 (
+      .O(px4),   // LUT general output
+      .I0(b[1]), // LUT input
+      .I1(b[2]), // LUT input
+      .I2(b[3]), // LUT input
+      .I3(a[1]), // LUT input
+      .I4(a[2]), // LUT input
+      .I5(a[3])  // LUT input
+   );
+   
+   //lut8
+   LUT6_2 #(
+      .INIT(64'h800000007F008000) // Specify LUT Contents
+   ) LUT6_2_inst3 (
+      .O6(py2), // 1-bit LUT6 output
+      .O5(py1), // 1-bit lower LUT5 output
+      .I0(b[3]), // 1-bit LUT input
+      .I1(a[0]), // 1-bit LUT input
+      .I2(b[0]), // 1-bit LUT input
+      .I3(a[3]), // 1-bit LUT input
+      .I4(b[1]), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   //lut9
+   LUT6_2 #(
+      .INIT(64'h8777788878880000) // Specify LUT Contents
+   ) LUT6_2_inst4 (
+      .O6(x[0]), // 1-bit LUT6 output
+      .O5(y[0]), // 1-bit lower LUT5 output
+      .I0(b[3]), // 1-bit LUT input
+      .I1(a[0]), // 1-bit LUT input
+      .I2(b[0]), // 1-bit LUT input
+      .I3(a[3]), // 1-bit LUT input
+      .I4(px0), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   //lut10
+   LUT6_2 #(
+      .INIT(64'h6666666688888888) // Specify LUT Contents
+   ) LUT6_2_inst5 (
+      .O6(x[1]), // 1-bit LUT6 output
+      .O5(y[1]), // 1-bit lower LUT5 output
+      .I0(px1), // 1-bit LUT input
+      .I1(py1), // 1-bit LUT input
+      .I2(one), // 1-bit LUT input
+      .I3(one), // 1-bit LUT input
+      .I4(one), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   //lut11
+   LUT6_2 #(
+      .INIT(64'h6666666688888888) // Specify LUT Contents
+   ) LUT6_2_inst6 (
+      .O6(x[2]), // 1-bit LUT6 output
+      .O5(y[2]), // 1-bit lower LUT5 output
+      .I0(px2), // 1-bit LUT input
+      .I1(py2), // 1-bit LUT input
+      .I2(one), // 1-bit LUT input
+      .I3(one), // 1-bit LUT input
+      .I4(one), // 1-bit LUT input
+      .I5(one)  // 1-bit LUT input (fast MUX select only available to O6 output)
+   );
+   
+   assign x[3]=px3;
+   assign y[3]=px4;
+   
+   //carry chain
+   full_add_4 fa4(.a(y),.b(x),.cin(g2),.sum(s),.cout(p[7]));
+   assign p[3]=s[0];
+   assign p[4]=s[1];
+   assign p[5]=s[2];
+   assign p[6]=s[3];
+endmodule
